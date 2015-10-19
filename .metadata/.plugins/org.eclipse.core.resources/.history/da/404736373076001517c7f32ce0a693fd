@@ -1,0 +1,17 @@
+'''
+Created on Oct 19, 2015
+
+@author: nhatuan
+'''
+from os.path import join
+import glob
+
+data='data/20150531.txt'
+
+def prepare_data_bnfinder():
+    files = glob.glob(join('data', '*.txt'))
+    for file in files:
+        lines = open(file).readlines()
+        
+if __name__ == '__main__':
+    pass

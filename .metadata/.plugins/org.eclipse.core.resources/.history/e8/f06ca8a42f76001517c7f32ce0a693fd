@@ -1,0 +1,9 @@
+'''
+Created on Oct 19, 2015
+
+@author: nhatuan
+'''
+data='data/20150531.txt'
+
+if __name__ == '__main__':
+    pass

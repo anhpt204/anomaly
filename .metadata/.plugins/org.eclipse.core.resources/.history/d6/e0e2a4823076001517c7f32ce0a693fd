@@ -1,0 +1,24 @@
+'''
+Created on Oct 19, 2015
+
+@author: nhatuan
+'''
+from os.path import join
+import glob
+
+data='data/20150531.txt'
+
+def prepare_data_bnfinder():
+    files = glob.glob(join('data', '*.txt'))
+    for file in files:
+        lines = open(file).readlines()
+        vs = lines[0].split()
+        rows=[[v] for v in vs[1:]]
+        for line in lines[1:]:
+            xs = line.split()
+            for row,x in zip(rows, xs[1:]):
+                row.append(x)
+                
+        
+if __name__ == '__main__':
+    pass
