@@ -47,14 +47,26 @@ def prepare_data_bnfinder():
         vs = lines[0].split()
         rows=[[v] for v in vs[1:]]
         
-        preamble_lines=['#continuous ' + ' '.join(vs[1:]) + '\n',]
-        
-        for line in lines[1:100]:
+        preamble_lines=['#continuous ' + ' '.join(vs[1:]) + '\n',
+                        '#parents m_spent m_received\n',
+                        '#parents i_sold i_bought\n',
+                        '#regulators m_received i_bought \n']
+        print len(lines)
+        counts=0
+        for line in lines[1:]:
             xs = line.split()
-            for row,x in zip(rows, xs[1:]):
-                row.append(x)
-                
-                
+#             print xs
+            try:
+                vs = [float(v) for v in xs[1:]]
+                if vs[1]==vs[2]==vs[3]==vs[4]==0:
+                    continue
+                counts +=1
+                for row,x in zip(rows, xs[1:]):
+                    row.append(x)
+            except:
+                pass
+            
+        print counts
         # write to file
         f = open(join('data', file_name+'.in'), 'w')
         
@@ -91,8 +103,8 @@ def anomaly_libpgm():
         
             
 if __name__ == '__main__':
-#     prepare_data_bnfinder()
+    prepare_data_bnfinder()
 
 #     anomaly_libpgm()
     
-    anomaly_BNfinder()
+#     anomaly_BNfinder()
