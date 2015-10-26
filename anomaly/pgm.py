@@ -19,6 +19,7 @@ import numpy as np
 import math
 from operator import itemgetter
  
+from bokeh.plotting import figure, output_file, show, save
 
 data='data/20150531.txt'
 
@@ -184,6 +185,8 @@ def pdf(network_file, points):
     users = [str(usr[0])+'\n' for usr in result[:num_of_outliers]]
     open(basename(network_file)+'.out', 'w').writelines(users)
             
+    bokeh_line(result)
+    
 def get_data_points(data_file):
     lines = open(data_file).readlines()
     points = []
@@ -200,6 +203,25 @@ def get_data_points(data_file):
         
     return points
         
+def bokeh_line(result_all):
+    '''
+    line chart for showing result
+    '''
+    result = result_all[:200]
+    output_file('line.html')
+    p = figure(plot_width=500, plot_height=500)
+    
+    x=range(len(result))
+    y = [result[i][1] for i in x]
+    p.line(x,y, line_width=2)
+    
+    red_y = [t for t in y if t < -200]
+    
+    p.circle(x,y, fill_color='white', size=8)
+    p.circle(xrange(len(red_y)), red_y, fill_color='red', size=8)
+    save(p, 'outliers.eps')
+    show(p)
+    
 if __name__ == '__main__':
 #     prepare_data_bnfinder()
 #     vars = ['i_sold', 'm_spent', 'i_bought', 'm_received']
